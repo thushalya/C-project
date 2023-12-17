@@ -1,0 +1,10 @@
+﻿  CSV.cpp
+  FlowerOrder.cpp
+  MainApplication.cpp
+  OrderBook.cpp
+  TradeApplication.cpp
+D:\C++ project\ConsoleApplication1\ConsoleApplication1\TradeApplication.cpp(65,20): warning C4018: '<': signed/unsigned mismatch
+D:\C++ project\ConsoleApplication1\ConsoleApplication1\TradeApplication.cpp(87,20): warning C4018: '<': signed/unsigned mismatch
+  utils.cpp
+  Generating Code...
+  ConsoleApplication1.vcxproj -> D:\C++ project\ConsoleApplication1\Debug\ConsoleApplication1.exe
