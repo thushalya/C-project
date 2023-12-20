@@ -21,23 +21,20 @@ using namespace std;
 
 
 
+
 class FlowerOrderBook
 {
 public:
-    string instrument;
-    priority_queue<FlowerOrder, std::vector<FlowerOrder>, BuyOrderComparator> buy_orders;
-    priority_queue<FlowerOrder, std::vector<FlowerOrder>, SellOrderComparator> sell_orders;
+    std::string instrument;
+    std::queue<FlowerOrder> buy_orders;
+    std::queue<FlowerOrder> sell_orders;
 
     // Constructor
-    FlowerOrderBook(string instrument);
+    FlowerOrderBook(std::string instrument);
 
+    void addSellArr(const FlowerOrder& order);
 
-    void addSellArr(const FlowerOrder order);
-
-
-    void addBuyArr(const FlowerOrder order);
-
-
+    void addBuyArr(const FlowerOrder& order);
 };
 
 
