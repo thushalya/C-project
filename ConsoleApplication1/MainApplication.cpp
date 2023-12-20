@@ -7,44 +7,43 @@ using namespace std;
 
 int main()
 {
-     // Get the input file path from the user
-    cout << "Enter the path of the input CSV file: ";
-    string INPUT_FILE_PATH;
-    getline(cin, INPUT_FILE_PATH);
+    // Get the input file path from the user
+    std::cout << "Enter the path of the input CSV file: ";
+    std::string inputFilePath;
+    std::getline(std::cin, inputFilePath);
 
-    // Read the CSV file and store the orders in the unordered map flower_fields
-    CSV read_file(INPUT_FILE_PATH);
+    // Read the CSV file and store the orders in the unordered map tradeOrders
+    CSV readFile(inputFilePath);
 
     // Get an instance of the Trade class
     Trade& tradeInstance = Trade::getInstance();
 
     // Convert CSV to order map and set up the order map or any other configurations
-    unordered_map<string, vector<FlowerOrder>> new_order_map = read_file.convertCsvToOrderMap(tradeInstance);
-    tradeInstance.order_map = new_order_map;
+    std::unordered_map<std::string, std::vector<FlowerOrder>> newOrderMap = readFile.convertCsvToOrderMap(tradeInstance);
+    tradeInstance.orderMap = newOrderMap;
 
     // Get the list of all instruments from the CSV
-    vector<string> allInstruments = read_file.getInstruments();
+    std::vector<std::string> allInstruments = readFile.getInstruments();
 
     // Threads for each instrument and rejected orders
-    const int num_threads = allInstruments.size();
-    thread threads[6];
+    const int numThreads = allInstruments.size();
+    std::thread threads[6]; // Assuming there are always 6 instruments
 
     // Start threads for each instrument
-    for (int i = 0; i < num_threads; i++)
+    for (int i = 0; i < numThreads; i++)
     {
-        threads[i] = thread(&Trade::executeOrders, &tradeInstance, allInstruments[i]);
+        threads[i] = std::thread(&Trade::processOrders, &tradeInstance, allInstruments[i]);
     }
-   // threads[5] = thread(&Trade::addRejectedOrders, &tradeInstance);
 
     // Wait until threads are completed
-    for (int i = 0; i < num_threads; ++i)
+    for (int i = 0; i < numThreads; ++i)
     {
         threads[i].join();
     }
 
     // Create the final CSV file
-    CSV write_file("execution_rep.csv");
-    write_file.writeToCsv(tradeInstance.trade_regular_queue);
+    CSV writeFile("execution_report.csv");
+    writeFile.writeToCsv(tradeInstance.tradeQueue);
 
     return 0;
 }
